@@ -78,12 +78,12 @@ function Hero({ scrollYProgress }: { scrollYProgress: any }) {
 
   return (
     <section className="relative h-screen flex items-center justify-center overflow-hidden">
-      <motion.div style={{ y, opacity }} className="absolute inset-0 z-0 border-b border-brand-border">
-        <div className="absolute inset-0 bg-gradient-to-b from-transparent via-brand-dark/60 to-brand-dark z-10" />
+      <motion.div style={{ y, opacity }} className="absolute inset-0 z-0 border-b border-brand-border bg-brand-dark">
+        <div className="absolute inset-0 bg-gradient-to-b from-brand-dark/20 via-brand-dark/40 to-brand-dark z-10" />
         <img
-          src="https://images.unsplash.com/photo-1441974231531-c6227db76b6e?auto=format&fit=crop&w=2000&q=80"
-          alt="Immersive forest trail"
-          className="w-full h-full object-cover object-center opacity-50 mix-blend-luminosity"
+          src="/hero-bg.jpg"
+          alt="Schwinn Shuffle Kick Scooter on Trail"
+          className="w-full h-full object-cover object-center opacity-80"
         />
       </motion.div>
 
@@ -142,7 +142,8 @@ function Foundation() {
              <img 
                 src="https://m.media-amazon.com/images/I/71WXPw97fTL._AC_SL1500_.jpg"
                 alt="Schwinn Shuffle Adult Kick Scooter"
-                className="w-[120%] h-[120%] object-contain transition-transform duration-1000 group-hover:scale-105 mix-blend-multiply opacity-90"
+                referrerPolicy="no-referrer"
+                className="w-full h-full object-contain transition-transform duration-1000 group-hover:scale-105 mix-blend-multiply opacity-100 p-8"
              />
              <div className="absolute inset-0 bg-brand-dark/5 mix-blend-multiply pointer-events-none" />
              <div className="absolute inset-x-0 bottom-0 p-8 bg-gradient-to-t from-brand-dark via-brand-dark/80 to-transparent pointer-events-none">
@@ -395,9 +396,10 @@ function Journal() {
 
         <figure className="mb-16 relative aspect-video overflow-hidden border border-brand-border">
            <img 
-              src="https://images.unsplash.com/photo-1502899576159-f224dc2349fa?auto=format&fit=crop&w=1200&q=80" 
-              alt="Urban trail stretching into the distance"
-              className="w-full h-full object-cover grayscale opacity-70 hover:grayscale-0 hover:opacity-100 transition-all duration-1000 mix-blend-luminosity"
+              src="https://m.media-amazon.com/images/I/71WXPw97fTL._AC_SL1500_.jpg" 
+              alt="Schwinn Shuffle Kick Scooter"
+              referrerPolicy="no-referrer"
+              className="w-full h-full object-contain grayscale opacity-70 hover:grayscale-0 hover:opacity-100 transition-all duration-1000 mix-blend-luminosity bg-white"
            />
            <div className="absolute inset-0 bg-gradient-to-b from-transparent to-[#0A0B0E]/80 pointer-events-none" />
         </figure>
