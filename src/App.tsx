@@ -140,9 +140,8 @@ function Foundation() {
         <div className="order-2 lg:order-1 relative aspect-square lg:aspect-[4/5] rounded-3xl overflow-hidden group border-2 border-dashed border-brand-border p-2 bg-[#f8f9fa]">
            <div className="relative w-full h-full rounded-2xl overflow-hidden bg-white flex items-center justify-center">
              <img 
-                src="https://m.media-amazon.com/images/I/71WXPw97fTL._AC_SL1500_.jpg"
+                src="https://images-na.ssl-images-amazon.com/images/P/B0183T0IRE.01.MAIN._SCRM_.jpg"
                 alt="Schwinn Shuffle Adult Kick Scooter"
-                referrerPolicy="no-referrer"
                 className="w-full h-full object-contain transition-transform duration-1000 group-hover:scale-105 mix-blend-multiply opacity-100 p-8"
              />
              <div className="absolute inset-0 bg-brand-dark/5 mix-blend-multiply pointer-events-none" />
@@ -394,14 +393,12 @@ function Journal() {
           <div className="w-12 h-[2px] bg-brand-cyan" />
         </div>
 
-        <figure className="mb-16 relative aspect-video overflow-hidden border border-brand-border">
+        <figure className="mb-16 relative aspect-video overflow-hidden border border-brand-border bg-white rounded-3xl p-8">
            <img 
-              src="https://m.media-amazon.com/images/I/71WXPw97fTL._AC_SL1500_.jpg" 
+              src="https://images-na.ssl-images-amazon.com/images/P/B018NXOSLC.01.MAIN._SCRM_.jpg" 
               alt="Schwinn Shuffle Kick Scooter"
-              referrerPolicy="no-referrer"
-              className="w-full h-full object-contain grayscale opacity-70 hover:grayscale-0 hover:opacity-100 transition-all duration-1000 mix-blend-luminosity bg-white"
+              className="w-full h-full object-contain"
            />
-           <div className="absolute inset-0 bg-gradient-to-b from-transparent to-[#0A0B0E]/80 pointer-events-none" />
         </figure>
 
         <article className="max-w-3xl mx-auto focus:outline-none text-xl">
