@@ -142,10 +142,10 @@ function Foundation() {
              <img 
                 src="https://images-na.ssl-images-amazon.com/images/P/B0183T0IRE.01.MAIN._SCRM_.jpg"
                 alt="Schwinn Shuffle Adult Kick Scooter"
-                className="w-full h-full object-contain transition-transform duration-1000 group-hover:scale-105 mix-blend-multiply opacity-100 p-8"
+                className="w-full h-full object-contain transition-transform duration-1000 group-hover:scale-105 opacity-100 p-8"
              />
              <div className="absolute inset-0 bg-brand-dark/5 mix-blend-multiply pointer-events-none" />
-             <div className="absolute inset-x-0 bottom-0 p-8 bg-gradient-to-t from-brand-dark via-brand-dark/80 to-transparent pointer-events-none">
+             <div className="absolute inset-x-0 bottom-0 p-8 bg-gradient-to-t from-brand-dark via-brand-dark/80 to-transparent pointer-events-none transition-opacity duration-500 group-hover:opacity-0">
                 <div className="flex justify-between items-end font-mono text-[10px] uppercase text-white tracking-widest">
                    <div>
                       <span className="text-brand-orange block mb-1">Frame</span>
@@ -156,6 +156,13 @@ function Foundation() {
                       <span>26" Front / 20" Rear</span>
                    </div>
                 </div>
+             </div>
+             {/* Hover Caption */}
+             <div className="absolute inset-0 bg-brand-dark/95 flex flex-col items-center justify-center p-8 opacity-0 group-hover:opacity-100 transition-opacity duration-500 text-center pointer-events-none">
+                <h4 className="text-brand-cyan font-mono text-[12px] uppercase tracking-[0.2em] mb-4">Base Configuration</h4>
+                <p className="text-white/90 font-sans text-sm leading-relaxed max-w-xs">
+                  The Schwinn Shuffle adult scooter in its stock light blue colorway. Features a durable high-tensile steel frame, front and rear linear pull brakes, and alloy rims designed for neighborhood commuting and recreational rides.
+                </p>
              </div>
            </div>
         </div>
@@ -393,12 +400,19 @@ function Journal() {
           <div className="w-12 h-[2px] bg-brand-cyan" />
         </div>
 
-        <figure className="mb-16 relative aspect-video overflow-hidden border border-brand-border bg-white rounded-3xl p-8">
+        <figure className="mb-16 relative aspect-video overflow-hidden border border-brand-border bg-white rounded-3xl p-8 group">
            <img 
               src="https://images-na.ssl-images-amazon.com/images/P/B018NXOSLC.01.MAIN._SCRM_.jpg" 
               alt="Schwinn Shuffle Kick Scooter"
-              className="w-full h-full object-contain"
+              className="w-full h-full object-contain transition-transform duration-1000 group-hover:scale-105"
            />
+           {/* Hover Caption */}
+           <div className="absolute inset-0 bg-brand-dark/95 flex flex-col items-center justify-center p-8 opacity-0 group-hover:opacity-100 transition-opacity duration-500 text-center pointer-events-none">
+              <h4 className="text-brand-orange font-mono text-[12px] uppercase tracking-[0.2em] mb-4">Scooter Profile</h4>
+              <p className="text-white/90 font-sans text-sm sm:text-base leading-relaxed max-w-lg">
+                Notice the lowered deck geometry which reduces knee strain during longer rides. The wooden deck adds a classic touch while absorbing minor road vibrations over long-distance urban trails.
+              </p>
+           </div>
         </figure>
 
         <article className="max-w-3xl mx-auto focus:outline-none text-xl">
