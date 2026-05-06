@@ -235,6 +235,13 @@ function GearLab() {
        desc: "The stock V-brakes are adequate, but replacing the pads with Kool-Stop Dual Compounds transforms the stopping power. Learn to drag the rear brake slightly during tight maneuvers for hyper-stable cornering.",
        stat: "All-Weather Stopping",
        modelId: "c1a3633d2e274d369c0e3c4711957a17"
+    },
+    {
+       title: "Frame Restoration",
+       subtitle: "Paint & Touch-ups",
+       desc: "Urban riding invites scratches. For cheap, precise touch-ups on the metallic blue frame, snag automotive touch-up pens from Amazon or AutoZone. Need a full overhaul? Rust-Oleum 2X Painter's Touch or Montana Cans provide durable, weather-resistant coats at a fraction of professional prices.",
+       stat: "Corrosion Prevention",
+       modelId: "7b44a71676d841c9a8eb777b2ee55096"
     }
   ];
 
