@@ -589,6 +589,24 @@ TAGVO Universal Mudguard Set (Front 26" Adaptation):
                     <p className="font-serif text-lg text-brand-light-gray leading-relaxed mb-6 italic whitespace-pre-wrap">
                       {activeUpgrade.desc}
                     </p>
+
+                    <div className="mb-6">
+                      <span className="block text-brand-light-gray opacity-50 text-[10px] uppercase mb-4 tracking-widest border-b border-brand-border/50 pb-2">Instructional Demonstration</span>
+                      <div className="w-full aspect-video bg-[#050505] border border-brand-border rounded-xl flex items-center justify-center relative overflow-hidden group/video">
+                        <div className="absolute inset-0 bg-brand-dark/50 flex flex-col items-center justify-center z-0">
+                           <Video className="w-8 h-8 text-brand-cyan mb-2" />
+                           <span className="font-mono text-[10px] text-brand-light-gray uppercase">Loading Datafeed...</span>
+                        </div>
+                        <iframe 
+                           className="relative z-10 w-full h-full"
+                           src={`https://www.youtube.com/embed?listType=search&list=${encodeURIComponent(activeUpgrade.title + " " + activeUpgrade.subtitle + " installation")}`}
+                           title="Installation Video"
+                           allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                           allowFullScreen
+                        />
+                      </div>
+                    </div>
+
                     <div className="flex border-t border-brand-border pt-6 mt-auto flex-col sm:flex-row gap-4 justify-between sm:items-center">
                        <div className="font-mono">
                           <span className="block text-brand-light-gray opacity-50 text-[10px] uppercase mb-1">Lab Metric</span>
@@ -902,14 +920,28 @@ function Journal() {
                    {entry.content}
                  </div>
 
-                 <div className="flex justify-center border-t border-brand-border/50 pt-8">
+                 <div className="flex flex-wrap items-center justify-center gap-4 border-t border-brand-border/50 pt-8">
                    <button
                      onClick={() => handleShare(entry)}
                      className="flex items-center gap-2 font-mono text-xs uppercase tracking-widest text-brand-light-gray hover:text-white transition-colors border border-brand-border hover:border-brand-orange px-6 py-3 rounded-full hover:bg-brand-orange/10"
                    >
                      <Share2 className="w-4 h-4" />
-                     Share Log
+                     Share
                    </button>
+                   <a 
+                     href="https://x.com/sorahitoshi89"
+                     target="_blank" rel="noopener noreferrer"
+                     className="flex items-center gap-2 font-mono text-xs uppercase tracking-widest text-[#1DA1F2] hover:text-white transition-colors border border-brand-border hover:border-[#1DA1F2] px-5 py-3 rounded-full hover:bg-[#1DA1F2]/10"
+                   >
+                     X / Twitter
+                   </a>
+                   <a 
+                     href="https://www.facebook.com/sorahitoshi"
+                     target="_blank" rel="noopener noreferrer"
+                     className="flex items-center gap-2 font-mono text-xs uppercase tracking-widest text-[#4267B2] hover:text-white transition-colors border border-brand-border hover:border-[#4267B2] px-5 py-3 rounded-full hover:bg-[#4267B2]/10"
+                   >
+                     Facebook
+                   </a>
                  </div>
               </article>
             </div>
