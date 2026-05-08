@@ -301,21 +301,21 @@ function GearLab() {
 
 ROCKBROS Vintage Minimalist Quick Release Fenders (Front & Rear):
 1. These minimalistic mudguards are incredibly easy to install, requiring almost no tools, and offer a sleek look.
-2. For the front (20" wheel), secure the quick-release clamp or strap onto the front fork crown or steerer tube, adjusting the angle to sit comfortably above the tire.
-3. For the rear (26" wheel), attach the quick-release clamp directly to the seat post or frame tube.
+2. For the front (26" wheel), secure the quick-release clamp or strap onto the front fork crown or steerer tube, adjusting the angle to sit comfortably above the tire.
+3. For the rear (20" wheel), attach the quick-release clamp directly to the frame tube bridging the rear wheel, or the seat post base depending on clearance.
 4. Use the adjustable pivots to fine-tune the fender's arc over the wheels. They are perfect for quick removal when the weather clears up.
 
-SKS Veloflexx 65 or Velo 65 MTB Fenders (Rear 26"):
-1. The SKS Veloflexx 65 is ideal as it doesn't require a frame bridge or eyelets. It attaches directly to the seat stays and seat tube using heavy-duty rubber straps.
-2. Position the rear fender over the wheel and secure the top strap to the seat tube bridge area.
-3. Attach the Veloflexx support stays (or Velo U-stays) to the lower seat stays using the provided rubber-coated Velcro or zip-ties.
+SKS Veloflexx 65 or Velo 65 MTB Fenders (Rear 20"):
+1. The SKS Veloflexx 65 is ideal as it doesn't require a frame bridge or eyelets. It attaches directly to the lower seat stays and seat tube area using heavy-duty rubber straps.
+2. Position the rear fender over the 20" wheel and secure the top strap to the frame securely.
+3. Attach the Veloflexx support stays to the lower chainstays using the provided rubber-coated Velcro or zip-ties.
 4. Adjust the bracket angle to dial in the tire clearance (about 10-15mm above the tire) and tighten all hex bolts.
 
-TAGVO Universal Mudguard Set (Front 20" Adaptation):
+TAGVO Universal Mudguard Set (Front 26" Adaptation):
 1. The TAGVO front mudguard mounts via an expansion plug into the bottom of the front fork's steerer tube.
 2. Select the correct expansion collet size (usually 20-24mm) and insert it upward into the fork crown hole.
 3. Tighten the hex bolt under the fender until the collet expands and grips the inside of the fork steerer tightly.
-4. The flexible plastic design will drape over the 20" front wheel nicely. Add heavy-duty zip-ties around the lower fork legs for extra stability during aggressive riding.`,
+4. The flexible plastic design will drape over the 26" front wheel nicely. Add heavy-duty zip-ties around the lower fork legs for extra stability during aggressive riding.`,
        stat: "All-Weather Readiness",
        modelId: "cdeab899fb0c4d30a3cc3f0080505513"
     }
