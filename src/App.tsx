@@ -1,6 +1,6 @@
 import { AnimatePresence, motion, useScroll, useTransform } from 'motion/react';
-import React, { useEffect, useState } from 'react';
-import { ShieldAlert, Compass, ChevronDown, Wrench, Menu, X, ArrowRight, Activity, Map, Disc, Image as ImageIcon, Video, Plus, Upload } from 'lucide-react';
+import React, { useEffect, useState, useMemo } from 'react';
+import { ShieldAlert, Compass, ChevronDown, Wrench, Menu, X, ArrowRight, Activity, Map, Disc, Image as ImageIcon, Video, Plus, Upload, Heart, Filter, ArrowDownUp } from 'lucide-react';
 
 export default function App() {
   const { scrollYProgress } = useScroll();
@@ -49,17 +49,20 @@ function Navigation({ isOpen, setIsOpen }: { isOpen: boolean, setIsOpen: (v: boo
             initial={{ opacity: 0, y: -20 }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -20 }}
-            className="fixed inset-0 z-40 bg-brand-dark/95 backdrop-blur-xl flex items-center justify-center"
+            transition={{ duration: 0.4, ease: [0.22, 1, 0.36, 1] }}
+            className="fixed inset-0 z-40 bg-brand-dark/80 backdrop-blur-md flex items-center justify-center p-4"
           >
-            <ul className="flex flex-col gap-8 text-center font-display text-4xl uppercase font-bold tracking-tighter">
+            <ul className="flex flex-col gap-6 w-full max-w-sm text-center font-display text-4xl uppercase font-bold tracking-tighter">
               {['Foundation', 'Gear Lab', 'Survival Guide', 'Journal'].map((item, i) => (
                 <motion.li
                   key={item}
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: i * 0.1 }}
+                  exit={{ opacity: 0, y: 10 }}
+                  transition={{ delay: i * 0.1, duration: 0.3, ease: 'easeOut' }}
+                  className="w-full"
                 >
-                  <a href={`#${item.toLowerCase().replace(' ', '-')}`} className="hover:text-brand-orange transition-colors block py-2" onClick={() => setIsOpen(false)}>
+                  <a href={`#${item.toLowerCase().replace(' ', '-')}`} className="hover:text-brand-orange hover:bg-brand-gray/50 rounded-xl transition-all block py-6 px-8 w-full" onClick={() => setIsOpen(false)}>
                     {item}
                   </a>
                 </motion.li>
@@ -207,45 +210,125 @@ function Foundation() {
 }
 
 function GearLab() {
-  const upgrades = [
+  const upgrades = useMemo(() => [
     {
+       id: "tires",
        title: "The Contact Patch",
        subtitle: "Tires & Tubes",
-       desc: "Ditch the knobby cruisers. Upgrade to Schwalbe Big Apples (26x2.0 Front, 20x2.0 Rear). They offer 'Balloonbike' suspension effect while drastically reducing rolling resistance. Pair with thorn-resistant tubes for urban invincibility.",
+       category: "Performance",
+       cost: 45,
+       rating: 4.8,
+       availability: "Amazon, eBay (Search 'Schwalbe Big Apple')",
+       difficulty: "Beginner",
+       toolsNeeded: "Tire Levers, Floor Pump",
+       timeToInstall: "20 minutes",
+       desc: "The stock knobby tires are energy vampires on pavement. Upgrading to Schwalbe Big Apples (26x2.0 Front, 20x2.0 Rear) is the most impactful change you can make. They offer a 'Balloonbike' air suspension effect at 35-40 PSI while drastically reducing rolling resistance. You can often find used or open-box pairs on eBay for under $50. Pair with basic thorn-resistant tubes from any local bike shop (LBS) or Walmart to avoid mid-commute flats. This single upgrade transforms the scooter from a neighborhood toy into a long-distance commuter.",
        stat: "-40% Rolling Resistance",
        modelId: "165727f212dd46cca6f0f6c1db1b3c71"
     },
     {
+       id: "bearings",
        title: "Friction Reduction",
        subtitle: "Bearings & Hubs",
-       desc: "The stock bearings bleed your kicking energy. Repacking the hubs with high-grade synthetic grease and Grade 25 loose ball bearings, or upgrading the entire wheelset to sealed cartridge hubs, extends your glide distance exponentially.",
+       category: "Performance",
+       cost: 8,
+       rating: 4.6,
+       availability: "Hardware Store, Amazon",
+       difficulty: "Intermediate",
+       toolsNeeded: "Cone Wrenches, Grease, Rags",
+       timeToInstall: "45 minutes",
+       desc: "The stock unsealed bearings bleed your kicking energy. You don't need expensive new wheels. Simply buying a $5 bag of Grade 25 loose ball bearings (1/4\" size for rear, 3/16\" for front) and repacking the existing hubs with high-grade synthetic marine or automotive grease will extend your glide distance exponentially. The process involves removing the axle nuts, cleaning out the old factory sludge, inserting the new shiny bearings, and carefully tightening the cones until play is eliminated but the wheel spins freely for minutes.",
        stat: "+35% Glide Duration",
        modelId: "151e092935414ea1b500732dbe26c94b"
     },
     {
+       id: "grips",
        title: "The Cockpit",
        subtitle: "Grips & Ergonomics",
-       desc: "Long distances punish your hands. Install Ergon GP3 or GP5 grips. The wide palm platform prevents ulnar nerve compression, while the integrated bar ends give you multiple hand positions for crushing headwinds.",
+       category: "Comfort",
+       cost: 15,
+       rating: 4.9,
+       availability: "AliExpress, Amazon",
+       difficulty: "Beginner",
+       toolsNeeded: "Allen Key Set",
+       timeToInstall: "5 minutes",
+       desc: "Long distances punish your hands with round stock grips. You don't need name-brand Ergon grips; generic 'Ergonomic Lock-on Grips with Bar Ends' from Amazon or AliExpress cost around $15 and deliver 95% of the benefit. The wide palm platform prevents ulnar nerve compression (hand numbness), while the integrated bar ends give you multiple hand positions for crushing headwinds. Just slip them on and tighten the hex bolt.",
        stat: "Zero Hand Numbness",
        modelId: "e7249628de344edaa9f364486b8de1c3"
     },
     {
+       id: "brakes",
        title: "Kinetic Control",
        subtitle: "Braking Strategy",
-       desc: "The stock V-brakes are adequate, but replacing the pads with Kool-Stop Dual Compounds transforms the stopping power. Learn to drag the rear brake slightly during tight maneuvers for hyper-stable cornering.",
+       category: "Safety",
+       cost: 12,
+       rating: 4.7,
+       availability: "Amazon, Local Bike Shop",
+       difficulty: "Beginner",
+       toolsNeeded: "5mm Allen Key",
+       timeToInstall: "15 minutes",
+       desc: "The stock V-brakes on the Shuffle are perfectly adequate metal arms—the weakness is the cheap rubber pads. Replacing just the pads with Kool-Stop Dual Compounds or generic salmon/black compound equivalents ($10-$15 online) transforms the stopping power from spongy to immediate. They bolt right on. Learn to drag the rear brake slightly during tight maneuvers for hyper-stable cornering in rainy city conditions.",
        stat: "All-Weather Stopping",
        modelId: "c1a3633d2e274d369c0e3c4711957a17"
     },
     {
+       id: "paint",
        title: "Frame Restoration",
        subtitle: "Paint & Touch-ups",
-       desc: "Urban riding invites scratches. For cheap, precise touch-ups on the metallic blue frame, snag automotive touch-up pens from Amazon or AutoZone. Need a full overhaul? Rust-Oleum 2X Painter's Touch or Montana Cans provide durable, weather-resistant coats at a fraction of professional prices.",
-       stat: "Corrosion Prevention",
+       category: "Aesthetic",
+       cost: 6,
+       rating: 4.3,
+       availability: "AutoZone, Walmart",
+       difficulty: "Beginner",
+       toolsNeeded: "Sandpaper, Tape, Prep Wipe",
+       timeToInstall: "60 minutes",
+       desc: "Urban riding inevitably invites scratches. For cheap, precise touch-ups on the metallic blue frame, snag automotive touch-up pens from an auto parts store. Need a full overhaul or color change? A $6 can of Rust-Oleum 2X Painter's Touch (Primer + Paint) provides a durable, weather-resistant coat. Lightly sand the frame with 400-grit paper, wipe with rubbing alcohol, tape off the brake mounts, and spray light, even coats.",
+       stat: "Rust Prevention",
        modelId: "7b44a71676d841c9a8eb777b2ee55096"
+    },
+    {
+       id: "fenders",
+       title: "Weather Protection",
+       subtitle: "Custom Fenders",
+       category: "Comfort",
+       cost: 25,
+       rating: 4.5,
+       availability: "Amazon, eBay",
+       difficulty: "Intermediate",
+       toolsNeeded: "Zip Ties, Scissors, Screwdriver",
+       timeToInstall: "30 minutes",
+       desc: "Keep the grit off your back and out of your headset. Custom 26/20 inch fender sets are rare to buy together, but you can buy cheap universal plastic MTB mudguards ($10-$15) on Amazon and attach them with heavy-duty zip ties. Alternatively, buy a standard 26-inch rear fender and a 20-inch front fender separately. A little creative drilling on the rear strut might be required, but you'll achieve reliable all-season domination on a budget.",
+       stat: "All-Weather Readiness",
+       modelId: "cdeab899fb0c4d30a3cc3f0080505513"
     }
-  ];
+  ], []);
 
-  const [active, setActive] = useState(0);
+  const [activeId, setActiveId] = useState(upgrades[0].id);
+  const [filter, setFilter] = useState("All");
+  const [sort, setSort] = useState("Default");
+  const [wishlist, setWishlist] = useState<string[]>([]);
+  
+  const displayedUpgrades = useMemo(() => {
+    let result = [...upgrades];
+    if (filter !== "All") {
+      if (filter === "Wishlist") {
+        result = result.filter(u => wishlist.includes(u.id));
+      } else {
+        result = result.filter(u => u.category === filter);
+      }
+    }
+    
+    if (sort === "Cost: Low to High") {
+      result.sort((a, b) => a.cost - b.cost);
+    } else if (sort === "Cost: High to Low") {
+      result.sort((a, b) => b.cost - a.cost);
+    } else if (sort === "Rating: High to Low") {
+      result.sort((a, b) => b.rating - a.rating);
+    }
+    return result;
+  }, [upgrades, filter, sort, wishlist]);
+
+  const activeUpgrade = upgrades.find(u => u.id === activeId) || upgrades[0];
 
   return (
     <section id="gear-lab" className="py-32 px-6 lg:px-20 relative bg-[#050505] border-y border-brand-border border-dashed overflow-hidden">
@@ -271,31 +354,68 @@ function GearLab() {
 
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-16 relative z-10">
             
+            <div className="lg:col-span-12 flex flex-col sm:flex-row gap-4 mb-4 items-start sm:items-center justify-between bg-brand-dark p-4 shrink-0 overflow-x-auto w-full border border-brand-border rounded-xl">
+              <div className="flex items-center gap-2">
+                <Filter className="w-4 h-4 text-brand-cyan hidden sm:block shrink-0" />
+                {["All", "Performance", "Comfort", "Safety", "Aesthetic", "Wishlist"].map(cat => (
+                  <button 
+                    key={cat}
+                    onClick={() => setFilter(cat)}
+                    className={`font-mono text-[10px] whitespace-nowrap uppercase tracking-widest px-3 py-1.5 rounded transition-colors ${filter === cat ? 'bg-brand-orange text-black' : 'text-brand-light-gray hover:bg-brand-gray border border-transparent'}`}
+                  >
+                    {cat}
+                  </button>
+                ))}
+              </div>
+              <div className="flex items-center gap-2">
+                <ArrowDownUp className="w-4 h-4 text-brand-cyan shrink-0" />
+                <select 
+                  value={sort}
+                  onChange={(e) => setSort(e.target.value)}
+                  className="bg-brand-gray font-mono text-[10px] uppercase tracking-widest text-brand-light-gray border border-brand-border px-3 py-1.5 focus:outline-none focus:border-brand-orange rounded"
+                >
+                  <option value="Default">Sort: Default</option>
+                  <option value="Cost: Low to High">Cost: Low to High</option>
+                  <option value="Cost: High to Low">Cost: High to Low</option>
+                  <option value="Rating: High to Low">Rating: High to Low</option>
+                </select>
+              </div>
+            </div>
+
             <div className="lg:col-span-5 flex flex-col gap-4">
-              {upgrades.map((up, i) => (
+              {displayedUpgrades.map((up) => (
                 <button
-                  key={i}
-                  onClick={() => setActive(i)}
+                  key={up.id}
+                  onClick={() => setActiveId(up.id)}
                   className={`text-left p-6 font-mono border transition-all duration-300 relative overflow-hidden group ${
-                    active === i 
+                    activeId === up.id 
                       ? 'bg-brand-gray border-brand-orange' 
                       : 'bg-[#0F1116] border-brand-border hover:border-brand-orange/50'
                   }`}
                 >
-                  {active === i && (
+                  {activeId === up.id && (
                      <motion.div layoutId="lab-indicator" className="absolute left-0 top-0 bottom-0 w-1 bg-brand-orange" />
                   )}
-                  <div className="flex items-center justify-between">
-                     <div>
-                        <span className={`block text-[10px] mb-2 uppercase ${active === i ? 'text-brand-orange' : 'text-brand-cyan'}`}>{up.subtitle}</span>
-                        <h3 className={`font-sans text-sm tracking-widest uppercase font-bold ${active === i ? 'text-white' : 'text-brand-light-gray group-hover:text-white'}`}>
-                          {up.title}
-                        </h3>
+                  <div className="flex items-center justify-between mb-2">
+                     <span className={`block text-[10px] uppercase ${activeId === up.id ? 'text-brand-orange' : 'text-brand-cyan'}`}>{up.subtitle}</span>
+                     <div className="flex items-center gap-2 text-[10px] text-brand-light-gray">
+                        <span className="bg-brand-dark px-1.5 py-0.5 rounded border border-brand-border">${up.cost}</span>
+                        <span className="bg-brand-dark px-1.5 py-0.5 rounded border border-brand-border">★ {up.rating}</span>
                      </div>
-                     <ArrowRight className={`w-4 h-4 transition-transform ${active === i ? 'text-brand-orange rotate-0' : 'text-brand-border -rotate-45 group-hover:text-brand-cyan'}`} />
+                  </div>
+                  <div className="flex items-center justify-between">
+                     <h3 className={`font-sans text-sm tracking-widest uppercase font-bold ${activeId === up.id ? 'text-white' : 'text-brand-light-gray group-hover:text-white'}`}>
+                       {up.title}
+                     </h3>
+                     <ArrowRight className={`w-4 h-4 transition-transform ${activeId === up.id ? 'text-brand-orange rotate-0' : 'text-brand-border -rotate-45 group-hover:text-brand-cyan'}`} />
                   </div>
                 </button>
               ))}
+              {displayedUpgrades.length === 0 && (
+                <div className="p-8 text-center border border-dashed border-brand-border text-brand-light-gray font-mono text-[10px] uppercase">
+                  No components found.
+                </div>
+              )}
             </div>
 
             <div className="lg:col-span-7 relative bg-[#0F1116] border border-brand-border p-8 lg:p-12 min-h-[500px] flex flex-col justify-center overflow-hidden">
@@ -305,43 +425,75 @@ function GearLab() {
                
                <AnimatePresence mode="wait">
                  <motion.div
-                   key={active}
+                   key={activeId}
                    initial={{ opacity: 0, x: 20 }}
                    animate={{ opacity: 1, x: 0 }}
                    exit={{ opacity: 0, x: -20 }}
                    transition={{ duration: 0.3 }}
                    className="relative z-10 flex flex-col h-full"
                  >
-                    <div className="inline-block self-start px-3 py-1 bg-brand-cyan/10 border border-brand-cyan/30 text-brand-cyan font-mono text-[10px] mb-6 uppercase tracking-widest">
-                       SPEC ID: {Math.random().toString(36).substring(7).toUpperCase()}
+                    <div className="flex items-center justify-between mb-6">
+                      <div className="inline-block self-start px-3 py-1 bg-brand-cyan/10 border border-brand-cyan/30 text-brand-cyan font-mono text-[10px] uppercase tracking-widest">
+                         SPEC ID: {Math.random().toString(36).substring(7).toUpperCase()}
+                      </div>
+                      <button 
+                        onClick={() => setWishlist(prev => prev.includes(activeUpgrade.id) ? prev.filter(id => id !== activeUpgrade.id) : [...prev, activeUpgrade.id])}
+                        className={`flex items-center gap-2 font-mono text-[10px] uppercase tracking-widest transition-colors px-3 py-1 border rounded ${wishlist.includes(activeUpgrade.id) ? 'bg-brand-orange/10 text-brand-orange border-brand-orange' : 'text-brand-light-gray border-brand-border hover:border-white hover:text-white'}`}
+                      >
+                        <Heart className={`w-3 h-3 ${wishlist.includes(activeUpgrade.id) ? 'fill-brand-orange text-brand-orange' : ''}`} />
+                        {wishlist.includes(activeUpgrade.id) ? 'Wishlisted' : 'Add to Wishlist'}
+                      </button>
                     </div>
                     
                     <h4 className="font-display text-4xl text-white italic uppercase font-black mb-6">
-                      {upgrades[active].title}
+                      {activeUpgrade.title}
                     </h4>
 
                     {/* 3D Model Viewer */}
                     <div className="w-full flex-1 min-h-[300px] bg-brand-dark/50 border border-brand-border rounded-xl overflow-hidden mb-8 relative group">
                        <span className="absolute top-4 left-4 z-10 font-mono text-[10px] text-brand-orange uppercase tracking-[0.2em] bg-[#050505]/80 px-3 py-1 backdrop-blur-sm border border-brand-border rounded">Interactive 3D Scan</span>
                        <iframe 
-                         title={upgrades[active].title}
+                         title={activeUpgrade.title}
                          width="100%" 
                          height="100%" 
                          className="absolute inset-0"
-                         src={`https://sketchfab.com/models/${upgrades[active].modelId}/embed?autostart=1&ui_controls=1&ui_infos=0&ui_watermark=0&ui_theme=dark&transparent=1`} 
+                         src={`https://sketchfab.com/models/${activeUpgrade.modelId}/embed?autostart=1&ui_controls=1&ui_infos=0&ui_watermark=0&ui_theme=dark&transparent=1`} 
                          frameBorder="0" 
                          allow="autoplay; fullscreen; vr" 
                          allowFullScreen>
                        </iframe>
                     </div>
 
+                    <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 mb-6 border border-brand-border p-4 bg-brand-dark rounded">
+                       <div>
+                          <span className="block text-brand-light-gray opacity-50 text-[10px] uppercase mb-1">Get It From</span>
+                          <span className="text-xs font-mono text-brand-cyan">{activeUpgrade.availability}</span>
+                       </div>
+                       <div>
+                          <span className="block text-brand-light-gray opacity-50 text-[10px] uppercase mb-1">Difficulty</span>
+                          <span className="text-xs font-mono text-white">{activeUpgrade.difficulty}</span>
+                       </div>
+                       <div>
+                          <span className="block text-brand-light-gray opacity-50 text-[10px] uppercase mb-1">Install Time</span>
+                          <span className="text-xs font-mono text-white">{activeUpgrade.timeToInstall}</span>
+                       </div>
+                       <div>
+                          <span className="block text-brand-light-gray opacity-50 text-[10px] uppercase mb-1">Tools Needed</span>
+                          <span className="text-xs font-mono text-white">{activeUpgrade.toolsNeeded}</span>
+                       </div>
+                    </div>
+
                     <p className="font-serif text-lg text-brand-light-gray leading-relaxed mb-6 italic">
-                      "{upgrades[active].desc}"
+                      "{activeUpgrade.desc}"
                     </p>
-                    <div className="flex border-t border-brand-border pt-6 mt-auto">
+                    <div className="flex border-t border-brand-border pt-6 mt-auto flex-col sm:flex-row gap-4 justify-between sm:items-center">
                        <div className="font-mono">
                           <span className="block text-brand-light-gray opacity-50 text-[10px] uppercase mb-1">Lab Metric</span>
-                          <span className="text-xl font-bold text-white tracking-widest">{upgrades[active].stat}</span>
+                          <span className="text-xl font-bold text-white tracking-widest">{activeUpgrade.stat}</span>
+                       </div>
+                       <div className="font-mono text-[11px] text-brand-light-gray flex items-center gap-4 uppercase self-start sm:self-auto">
+                          <span>Est. Cost: <span className="text-white">${activeUpgrade.cost}</span></span>
+                          <span>Rating: <span className="text-white">★ {activeUpgrade.rating}</span></span>
                        </div>
                     </div>
                  </motion.div>
