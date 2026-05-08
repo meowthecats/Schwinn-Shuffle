@@ -1,6 +1,6 @@
 import { AnimatePresence, motion, useScroll, useTransform } from 'motion/react';
 import React, { useEffect, useState, useMemo } from 'react';
-import { ShieldAlert, Compass, ChevronDown, Wrench, Menu, X, ArrowRight, Activity, Map, Disc, Image as ImageIcon, Video, Plus, Upload, Heart, Filter, ArrowDownUp, Scale, Check } from 'lucide-react';
+import { ShieldAlert, Compass, ChevronDown, Wrench, Menu, X, ArrowRight, Activity, Map, Disc, Image as ImageIcon, Video, Plus, Upload, Heart, Filter, ArrowDownUp, Scale, Check, Share2, Link } from 'lucide-react';
 
 export default function App() {
   const { scrollYProgress } = useScroll();
@@ -744,6 +744,25 @@ function Journal() {
     setPreviewError("");
   };
 
+  const handleShare = async (entry: any) => {
+    const shareData = {
+      title: entry.title,
+      text: `Check out this expedition log: ${entry.title}`,
+      url: window.location.href,
+    };
+
+    try {
+      if (navigator.share) {
+        await navigator.share(shareData);
+      } else {
+        await navigator.clipboard.writeText(`${shareData.text} \n${shareData.url}`);
+        alert("Link copied to clipboard!");
+      }
+    } catch (err) {
+      console.error("Error sharing:", err);
+    }
+  };
+
   return (
     <section id="journal" className="py-32 px-6 lg:px-20 bg-brand-gray border-t border-brand-border">
       <div className="max-w-4xl mx-auto relative z-10">
@@ -879,8 +898,18 @@ function Journal() {
                    Entry {entry.id} • Date: {entry.date} • Avg Speed: {entry.speed}
                  </p>
 
-                 <div className="font-serif text-brand-light-gray leading-loose space-y-8 break-words whitespace-pre-wrap">
+                 <div className="font-serif text-brand-light-gray leading-loose space-y-8 break-words whitespace-pre-wrap mb-10">
                    {entry.content}
+                 </div>
+
+                 <div className="flex justify-center border-t border-brand-border/50 pt-8">
+                   <button
+                     onClick={() => handleShare(entry)}
+                     className="flex items-center gap-2 font-mono text-xs uppercase tracking-widest text-brand-light-gray hover:text-white transition-colors border border-brand-border hover:border-brand-orange px-6 py-3 rounded-full hover:bg-brand-orange/10"
+                   >
+                     <Share2 className="w-4 h-4" />
+                     Share Log
+                   </button>
                  </div>
               </article>
             </div>
