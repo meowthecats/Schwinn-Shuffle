@@ -1,6 +1,6 @@
 import { AnimatePresence, motion, useScroll, useTransform } from 'motion/react';
 import React, { useEffect, useState, useMemo } from 'react';
-import { ShieldAlert, Compass, ChevronDown, Wrench, Menu, X, ArrowRight, Activity, Map, Disc, Image as ImageIcon, Video, Plus, Upload, Heart, Filter, ArrowDownUp } from 'lucide-react';
+import { ShieldAlert, Compass, ChevronDown, Wrench, Menu, X, ArrowRight, Activity, Map, Disc, Image as ImageIcon, Video, Plus, Upload, Heart, Filter, ArrowDownUp, Scale, Check } from 'lucide-react';
 
 export default function App() {
   const { scrollYProgress } = useScroll();
@@ -291,13 +291,31 @@ function GearLab() {
        title: "Weather Protection",
        subtitle: "Custom Fenders",
        category: "Comfort",
-       cost: 25,
-       rating: 4.5,
-       availability: "Amazon, eBay",
+       cost: 45,
+       rating: 4.8,
+       availability: "Amazon (Search 'TAGVO', 'SKS Velo', 'ROCKBROS Fenders')",
        difficulty: "Intermediate",
-       toolsNeeded: "Zip Ties, Scissors, Screwdriver",
-       timeToInstall: "30 minutes",
-       desc: "Keep the grit off your back and out of your headset. Custom 26/20 inch fender sets are rare to buy together, but you can buy cheap universal plastic MTB mudguards ($10-$15) on Amazon and attach them with heavy-duty zip ties. Alternatively, buy a standard 26-inch rear fender and a 20-inch front fender separately. A little creative drilling on the rear strut might be required, but you'll achieve reliable all-season domination on a budget.",
+       toolsNeeded: "Zip Ties, Screwdriver, Hex Keys, P-clamps",
+       timeToInstall: "15 - 60 minutes",
+       desc: `Keep the grit off your back and out of your headset. Custom 26/20 inch fender sets are rare, but adapting MTB mudguards gives reliable all-season domination.
+
+ROCKBROS Vintage Minimalist Quick Release Fenders (Front & Rear):
+1. These minimalistic mudguards are incredibly easy to install, requiring almost no tools, and offer a sleek look.
+2. For the front (20" wheel), secure the quick-release clamp or strap onto the front fork crown or steerer tube, adjusting the angle to sit comfortably above the tire.
+3. For the rear (26" wheel), attach the quick-release clamp directly to the seat post or frame tube.
+4. Use the adjustable pivots to fine-tune the fender's arc over the wheels. They are perfect for quick removal when the weather clears up.
+
+SKS Veloflexx 65 or Velo 65 MTB Fenders (Rear 26"):
+1. The SKS Veloflexx 65 is ideal as it doesn't require a frame bridge or eyelets. It attaches directly to the seat stays and seat tube using heavy-duty rubber straps.
+2. Position the rear fender over the wheel and secure the top strap to the seat tube bridge area.
+3. Attach the Veloflexx support stays (or Velo U-stays) to the lower seat stays using the provided rubber-coated Velcro or zip-ties.
+4. Adjust the bracket angle to dial in the tire clearance (about 10-15mm above the tire) and tighten all hex bolts.
+
+TAGVO Universal Mudguard Set (Front 20" Adaptation):
+1. The TAGVO front mudguard mounts via an expansion plug into the bottom of the front fork's steerer tube.
+2. Select the correct expansion collet size (usually 20-24mm) and insert it upward into the fork crown hole.
+3. Tighten the hex bolt under the fender until the collet expands and grips the inside of the fork steerer tightly.
+4. The flexible plastic design will drape over the 20" front wheel nicely. Add heavy-duty zip-ties around the lower fork legs for extra stability during aggressive riding.`,
        stat: "All-Weather Readiness",
        modelId: "cdeab899fb0c4d30a3cc3f0080505513"
     }
@@ -307,6 +325,8 @@ function GearLab() {
   const [filter, setFilter] = useState("All");
   const [sort, setSort] = useState("Default");
   const [wishlist, setWishlist] = useState<string[]>([]);
+  const [compareMode, setCompareMode] = useState(false);
+  const [compareList, setCompareList] = useState<string[]>([]);
   
   const displayedUpgrades = useMemo(() => {
     let result = [...upgrades];
@@ -368,6 +388,13 @@ function GearLab() {
                 ))}
               </div>
               <div className="flex items-center gap-2">
+                <button 
+                  onClick={() => setCompareMode(!compareMode)}
+                  className={`flex items-center gap-2 font-mono text-[10px] uppercase tracking-widest px-3 py-1.5 rounded border transition-colors ${compareMode ? 'bg-brand-orange text-black border-brand-orange' : 'text-brand-light-gray border-brand-border hover:border-brand-orange hover:text-white'}`}
+                >
+                  <Scale className="w-4 h-4 shrink-0" />
+                  Compare
+                </button>
                 <ArrowDownUp className="w-4 h-4 text-brand-cyan shrink-0" />
                 <select 
                   value={sort}
@@ -383,34 +410,52 @@ function GearLab() {
             </div>
 
             <div className="lg:col-span-5 flex flex-col gap-4">
-              {displayedUpgrades.map((up) => (
+              {displayedUpgrades.map((up) => {
+                const isSelected = compareMode ? compareList.includes(up.id) : activeId === up.id;
+                return (
                 <button
                   key={up.id}
-                  onClick={() => setActiveId(up.id)}
+                  onClick={() => {
+                    if (compareMode) {
+                      setCompareList(prev => 
+                        prev.includes(up.id) 
+                          ? prev.filter(id => id !== up.id) 
+                          : prev.length < 3 ? [...prev, up.id] : prev
+                      );
+                    } else {
+                      setActiveId(up.id);
+                    }
+                  }}
                   className={`text-left p-6 font-mono border transition-all duration-300 relative overflow-hidden group ${
-                    activeId === up.id 
+                    isSelected 
                       ? 'bg-brand-gray border-brand-orange' 
                       : 'bg-[#0F1116] border-brand-border hover:border-brand-orange/50'
                   }`}
                 >
-                  {activeId === up.id && (
+                  {isSelected && (
                      <motion.div layoutId="lab-indicator" className="absolute left-0 top-0 bottom-0 w-1 bg-brand-orange" />
                   )}
                   <div className="flex items-center justify-between mb-2">
-                     <span className={`block text-[10px] uppercase ${activeId === up.id ? 'text-brand-orange' : 'text-brand-cyan'}`}>{up.subtitle}</span>
+                     <span className={`block text-[10px] uppercase ${isSelected ? 'text-brand-orange' : 'text-brand-cyan'}`}>{up.subtitle}</span>
                      <div className="flex items-center gap-2 text-[10px] text-brand-light-gray">
                         <span className="bg-brand-dark px-1.5 py-0.5 rounded border border-brand-border">${up.cost}</span>
                         <span className="bg-brand-dark px-1.5 py-0.5 rounded border border-brand-border">★ {up.rating}</span>
                      </div>
                   </div>
                   <div className="flex items-center justify-between">
-                     <h3 className={`font-sans text-sm tracking-widest uppercase font-bold ${activeId === up.id ? 'text-white' : 'text-brand-light-gray group-hover:text-white'}`}>
+                     <h3 className={`font-sans text-sm tracking-widest uppercase font-bold ${isSelected ? 'text-white' : 'text-brand-light-gray group-hover:text-white'}`}>
                        {up.title}
                      </h3>
-                     <ArrowRight className={`w-4 h-4 transition-transform ${activeId === up.id ? 'text-brand-orange rotate-0' : 'text-brand-border -rotate-45 group-hover:text-brand-cyan'}`} />
+                     {compareMode ? (
+                        <div className={`w-4 h-4 border flex items-center justify-center rounded-sm transition-colors ${isSelected ? 'bg-brand-orange border-brand-orange text-black' : 'border-brand-border'}`}>
+                          {isSelected && <Check className="w-3 h-3" />}
+                        </div>
+                     ) : (
+                        <ArrowRight className={`w-4 h-4 transition-transform ${isSelected ? 'text-brand-orange rotate-0' : 'text-brand-border -rotate-45 group-hover:text-brand-cyan'}`} />
+                     )}
                   </div>
                 </button>
-              ))}
+              )})}
               {displayedUpgrades.length === 0 && (
                 <div className="p-8 text-center border border-dashed border-brand-border text-brand-light-gray font-mono text-[10px] uppercase">
                   No components found.
@@ -424,14 +469,72 @@ function GearLab() {
                </div>
                
                <AnimatePresence mode="wait">
-                 <motion.div
-                   key={activeId}
-                   initial={{ opacity: 0, x: 20 }}
-                   animate={{ opacity: 1, x: 0 }}
-                   exit={{ opacity: 0, x: -20 }}
-                   transition={{ duration: 0.3 }}
-                   className="relative z-10 flex flex-col h-full"
-                 >
+                 {compareMode ? (
+                   <motion.div
+                     key="compare-view"
+                     initial={{ opacity: 0 }}
+                     animate={{ opacity: 1 }}
+                     exit={{ opacity: 0 }}
+                     transition={{ duration: 0.3 }}
+                     className="relative z-10 flex flex-col h-full w-full"
+                   >
+                      <h4 className="font-display text-2xl text-white italic uppercase font-black mb-6">
+                        System Comparison
+                      </h4>
+                      {compareList.length === 0 ? (
+                        <div className="flex-1 flex items-center justify-center border border-dashed border-brand-border rounded-xl text-brand-light-gray font-mono text-xs uppercase text-center p-8">
+                          Select up to 3 components from the roster<br />to compare side-by-side.
+                        </div>
+                      ) : (
+                        <div className={`grid gap-4 flex-1 ${compareList.length === 1 ? 'grid-cols-1' : compareList.length === 2 ? 'grid-cols-2' : 'grid-cols-3'}`}>
+                          {compareList.map(id => {
+                            const comp = upgrades.find(u => u.id === id);
+                            if (!comp) return null;
+                            return (
+                              <div key={id} className="flex flex-col border border-brand-border bg-brand-dark rounded relative">
+                                <div className="p-3 border-b border-brand-border bg-[#050505] flex items-center justify-between">
+                                  <h5 className="font-sans text-xs uppercase font-bold text-white truncate pr-2">{comp.title}</h5>
+                                  <button onClick={() => setCompareList(prev => prev.filter(c => c !== id))} className="text-brand-light-gray hover:text-white shrink-0">
+                                    <X className="w-3 h-3" />
+                                  </button>
+                                </div>
+                                <div className="p-4 flex-1 flex flex-col gap-4 font-mono text-[10px] uppercase">
+                                  <div>
+                                    <span className="block text-brand-light-gray opacity-50 mb-1">Cost / Rating</span>
+                                    <span className="text-brand-orange font-bold text-sm leading-none">${comp.cost} <span className="text-brand-light-gray font-normal text-[10px]">|</span> ★ {comp.rating}</span>
+                                  </div>
+                                  <div>
+                                    <span className="block text-brand-light-gray opacity-50 mb-1">Metric</span>
+                                    <span className="text-brand-cyan">{comp.stat}</span>
+                                  </div>
+                                  <div>
+                                    <span className="block text-brand-light-gray opacity-50 mb-1">Difficulty</span>
+                                    <span className="text-white">{comp.difficulty} ({comp.timeToInstall})</span>
+                                  </div>
+                                  <div className="mt-auto pt-4 flex gap-2">
+                                    <button 
+                                      onClick={() => { setCompareMode(false); setActiveId(comp.id); }}
+                                      className="flex-1 py-2 border border-brand-border hover:border-brand-orange text-brand-light-gray hover:text-brand-orange transition-colors rounded text-center"
+                                    >
+                                      View Setup
+                                    </button>
+                                  </div>
+                                </div>
+                              </div>
+                            );
+                          })}
+                        </div>
+                      )}
+                   </motion.div>
+                 ) : (
+                   <motion.div
+                     key={`single-${activeId}`}
+                     initial={{ opacity: 0, x: 20 }}
+                     animate={{ opacity: 1, x: 0 }}
+                     exit={{ opacity: 0, x: -20 }}
+                     transition={{ duration: 0.3 }}
+                     className="relative z-10 flex flex-col h-full"
+                   >
                     <div className="flex items-center justify-between mb-6">
                       <div className="inline-block self-start px-3 py-1 bg-brand-cyan/10 border border-brand-cyan/30 text-brand-cyan font-mono text-[10px] uppercase tracking-widest">
                          SPEC ID: {Math.random().toString(36).substring(7).toUpperCase()}
@@ -483,8 +586,8 @@ function GearLab() {
                        </div>
                     </div>
 
-                    <p className="font-serif text-lg text-brand-light-gray leading-relaxed mb-6 italic">
-                      "{activeUpgrade.desc}"
+                    <p className="font-serif text-lg text-brand-light-gray leading-relaxed mb-6 italic whitespace-pre-wrap">
+                      {activeUpgrade.desc}
                     </p>
                     <div className="flex border-t border-brand-border pt-6 mt-auto flex-col sm:flex-row gap-4 justify-between sm:items-center">
                        <div className="font-mono">
@@ -497,6 +600,7 @@ function GearLab() {
                        </div>
                     </div>
                  </motion.div>
+                 )}
                </AnimatePresence>
             </div>
 
@@ -611,7 +715,7 @@ function Journal() {
 
   const handleMediaUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files && e.target.files.length > 0) {
-      const newFiles = Array.from(e.target.files).map(file => ({
+      const newFiles = Array.from(e.target.files).map((file: File) => ({
         type: file.type.startsWith('video/') ? 'video' : 'image',
         url: URL.createObjectURL(file)
       }));
